@@ -1,4 +1,4 @@
-<h1>NestJS Boilerplate
+<h1>NestJS Starter Kit
   <a
     href="http://nestjs.com/"
     target="blank"
@@ -10,10 +10,6 @@
     />
   </a>
 </h1>
-
-## Description
-
-[NestJS](https://github.com/nestjs/nest) Boilerplate made with ❤️ by [💡VivifyIdeas💡](https://www.vivifyideas.com).
 
 ## Start Guide
 
