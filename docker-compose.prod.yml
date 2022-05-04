@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  nest:
+    container_name: nest-prod
+    command:
+      - /bin/sh
+      - -c
+      - yarn build && yarn start

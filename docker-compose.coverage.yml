@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  nest:
+    container_name: nest-coverage
+    command: yarn test:cov
