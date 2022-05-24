@@ -11,7 +11,7 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async get(id: number) {
+  async get(id: string) {
     return this.userRepository.findOne({ id });
   }
 
