@@ -8,18 +8,13 @@ export class CreateUsersTable1611484925515 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int4',
+            type: 'uuid',
             isPrimary: true,
             isGenerated: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
           },
           {
-            name: 'firstName',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'lastName',
+            name: 'name',
             type: 'varchar',
             isNullable: false,
           },
@@ -32,6 +27,27 @@ export class CreateUsersTable1611484925515 implements MigrationInterface {
             name: 'password',
             type: 'varchar',
             isNullable: false,
+          },
+          {
+            name: 'role',
+            type: 'enum',
+            enum: ['user', 'admin'],
+            isNullable: false,
+          },
+          {
+            name: 'is_email_verified',
+            type: 'boolean',
+            default: false,
+          },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()'
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()'
           },
         ],
       }),
