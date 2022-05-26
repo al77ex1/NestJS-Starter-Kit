@@ -1,20 +1,19 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { PasswordTransformer } from './password.transformer';
 
+export type UserRoleType = 'admin' | 'user';
+
 @Entity({
   name: 'users',
 })
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255 })
-  firstName: string;
+  @Column({ length: 50 })
+  name: string;
 
-  @Column({ length: 255 })
-  lastName: string;
-
-  @Column({ length: 255 })
+  @Column({ length: 50 })
   email: string;
 
   @Column({
@@ -24,6 +23,30 @@ export class User {
   })
   password: string;
 
+  @Column({
+    type: 'enum',
+    enum: ['admin', 'user'],
+    default: 'user',
+  })
+  role: UserRoleType;
+
+  @Column()
+  isEmailVerified: boolean;
+
+  @Column({
+    type: 'date',
+    nullable: true,
+    default: () => 'NOW()',
+  })
+  createdAt: string;
+
+  @Column({
+    type: 'date',
+    nullable: true,
+    default: () => 'NOW()',
+  })
+  updatedAt: string;
+
   toJSON() {
     const { password, ...self } = this;
     return self;
@@ -31,8 +54,8 @@ export class User {
 }
 
 export class UserFillableFields {
+  name: string;
   email: string;
-  firstName: string;
-  lastName: string;
   password: string;
+  role: UserRoleType;
 }
