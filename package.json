@@ -22,9 +22,11 @@
     "docker:cov": "docker-compose -f docker-compose.yml -f docker-compose.coverage.yml up",
     "ts-typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
     "migration:make": "typeorm migration:create -d src/migrations",
+    "migration:generate": "yarn ts-typeorm migration:generate -d src/migrations",
     "migration:run": "yarn ts-typeorm migration:run",
     "migration:undo": "yarn ts-typeorm migration:revert",
     "docker:migration:make": "docker exec nest-dev yarn migration:make",
+    "docker:migration:generate": "docker exec nest-dev yarn migration:generate",
     "docker:migration:run": "docker exec nest-dev yarn migration:run",
     "docker:migration:undo": "docker exec nest-dev yarn migration:undo"
   },
@@ -50,7 +52,6 @@
     "rxjs": "^7.5.5",
     "swagger-ui-express": "^4.3.0",
     "typeorm": "^0.2.45",
-    "typeorm-naming-strategies": "^4.1.0",
     "typescript": "^4.6.2"
   },
   "devDependencies": {
