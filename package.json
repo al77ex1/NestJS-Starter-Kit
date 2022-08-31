@@ -50,6 +50,7 @@
     "rxjs": "^7.5.5",
     "swagger-ui-express": "^4.3.0",
     "typeorm": "^0.2.45",
+    "typeorm-naming-strategies": "^4.1.0",
     "typescript": "^4.6.2"
   },
   "devDependencies": {
@@ -75,11 +76,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": "src",
     "testRegex": ".spec.ts$",
     "transform": {

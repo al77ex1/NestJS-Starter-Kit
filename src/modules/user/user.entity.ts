@@ -31,21 +31,21 @@ export class User {
   role: UserRoleType;
 
   @Column({ type: 'boolean', default: false })
-  is_email_verified: boolean;
+  isEmailVerified: boolean;
 
   @Column({
     type: 'date',
     nullable: true,
     default: () => 'NOW()',
   })
-  created_at: string;
+  createdAt: string;
 
   @Column({
     type: 'date',
     nullable: true,
     default: () => 'NOW()',
   })
-  updated_at: string;
+  updatedAt: string;
 
   toJSON() {
     const { password, ...self } = this;

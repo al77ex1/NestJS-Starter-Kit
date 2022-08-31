@@ -5,6 +5,7 @@ import { CommonModule } from './../common';
 import { ConfigModule, ConfigService } from './../config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AppService } from './app.service';
           migrations: [__dirname + './../../migrations/*{.ts,.js}'],
           migrationsTableName: 'migrations_typeorm',  
           migrationsRun: true,
+          namingStrategy: new SnakeNamingStrategy(),
         } as TypeOrmModuleAsyncOptions;
       },
     }),
