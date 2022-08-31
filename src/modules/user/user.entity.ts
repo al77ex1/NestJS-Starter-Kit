@@ -30,22 +30,22 @@ export class User {
   })
   role: UserRoleType;
 
-  @Column()
-  isEmailVerified: boolean;
+  @Column({ type: 'boolean', default: false })
+  is_email_verified: boolean;
 
   @Column({
     type: 'date',
     nullable: true,
     default: () => 'NOW()',
   })
-  createdAt: string;
+  created_at: string;
 
   @Column({
     type: 'date',
     nullable: true,
     default: () => 'NOW()',
   })
-  updatedAt: string;
+  updated_at: string;
 
   toJSON() {
     const { password, ...self } = this;
