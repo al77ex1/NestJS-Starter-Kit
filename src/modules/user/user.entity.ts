@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { PasswordTransformer } from './password.transformer';
+import { Token } from '../auth/auth.entity';
 
 export type UserRoleType = 'admin' | 'user';
 
@@ -46,6 +47,9 @@ export class User {
     default: () => 'NOW()',
   })
   updatedAt: string;
+
+  @OneToMany(() => Token, token => token.user)
+  tokens: Token[];
 
   toJSON() {
     const { password, ...self } = this;
