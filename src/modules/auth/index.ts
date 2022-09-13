@@ -1,5 +1,6 @@
 export * from './login.payload';
 export * from './register.payload';
+export * from './auth.entity';
 export * from './auth.service';
 export * from './jwt.strategy';
 export * from './auth.module';

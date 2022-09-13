@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { PasswordTransformer } from './password.transformer';
-import { Token } from '../auth/auth.entity';
+import { Token } from '../auth';
 
 export type UserRoleType = 'admin' | 'user';
 
