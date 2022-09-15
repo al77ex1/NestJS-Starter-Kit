@@ -15,7 +15,7 @@ export class Token {
   type: string;
 
   @Column({
-    type: 'date',
+    type: 'timestamptz',
     nullable: false,
   })
   expires: string;
@@ -25,11 +25,17 @@ export class Token {
 
   @ManyToOne(() => User, user => user.tokens)
   user: User;
+
+  toJSON() {
+    const { ...self } = this;
+    return self;
+  }
 }
 
 export class TokenFillableFields {
   token: string;
   type: string;
   expires: string;
-  blacklisted: string;
+  blacklisted: boolean;
+  user: string;
 }

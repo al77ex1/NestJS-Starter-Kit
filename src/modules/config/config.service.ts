@@ -16,3 +16,10 @@ export class ConfigService {
     return this.envConfig.APP_ENV === env;
   }
 }
+
+export const tokenTypes = {
+  ACCESS: 'access',
+  REFRESH: 'refresh',
+  RESET_PASSWORD: 'resetPassword',
+  VERIFY_EMAIL: 'verifyEmail',
+};
