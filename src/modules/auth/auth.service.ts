@@ -8,15 +8,15 @@ import { LoginPayload } from './login.payload';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Token, TokenFillableFields } from './token.entity';
+import { Auth, AuthFillableFields } from './auth.entity';
 
 @Injectable()
 export class AuthService {
   private readonly tokenTypes: { [key: string]: string };
 
   constructor(
-    @InjectRepository(Token)
-    private readonly tokenRepository: Repository<Token>,
+    @InjectRepository(Auth)
+    private readonly tokenRepository: Repository<Auth>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UsersService,
@@ -34,7 +34,7 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
 
-  async saveToken(payload: TokenFillableFields) {
+  async saveToken(payload: AuthFillableFields) {
     return await this.tokenRepository.save(payload as object);
   }
 

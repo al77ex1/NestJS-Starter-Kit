@@ -2,9 +2,9 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from '../user';
 
 @Entity({
-  name: 'token',
+  name: 'auth',
 })
-export class Token {
+export class Auth {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -23,7 +23,7 @@ export class Token {
   @Column({ type: 'boolean', default: false })
   blacklisted: boolean;
 
-  @ManyToOne(() => User, user => user.tokens)
+  @ManyToOne(() => User, user => user.auths, { onDelete: 'CASCADE' })
   user: User;
 
   toJSON() {
@@ -32,7 +32,7 @@ export class Token {
   }
 }
 
-export class TokenFillableFields {
+export class AuthFillableFields {
   token: string;
   type: string;
   expires: string;
