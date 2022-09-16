@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(
     @InjectRepository(Auth)
-    private readonly tokenRepository: Repository<Auth>,
+    private readonly authRepository: Repository<Auth>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UsersService,
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   async saveToken(payload: AuthFillableFields) {
-    return await this.tokenRepository.save(payload as object);
+    return await this.authRepository.save(payload as object);
   }
 
   async createToken(user: User) {
