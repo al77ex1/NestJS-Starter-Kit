@@ -38,7 +38,7 @@ export class AuthService {
     return await this.authRepository.save(payload as object);
   }
 
-  async createToken(user: User) {
+  async generateAuthTokens(user: User) {
     const accessTokenExpires = moment()
       .add(this.configService.get('JWT_ACCESS_EXPIRATION_MINUTES'), 'minutes')
       .unix();
@@ -65,8 +65,14 @@ export class AuthService {
     });
 
     return {
-      expiresIn: this.configService.get('JWT_ACCESS_EXPIRATION_MINUTES'),
-      accessToken: this.jwtService.sign({ id: user.id }),
+      access: {
+        token: accessToken,
+        expires: moment.unix(accessTokenExpires).format('YYYY-MM-DD HH:mm:ss'),
+      },
+      refresh: {
+        token: refreshToken,
+        expires: moment.unix(refreshTokenExpires).format('YYYY-MM-DD HH:mm:ss'),
+      },
       user,
     };
   }

@@ -19,7 +19,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(@Body() payload: LoginPayload): Promise<any> {
     const user = await this.authService.validateUser(payload);
-    return await this.authService.createToken(user);
+    return await this.authService.generateAuthTokens(user);
   }
 
   @Post('register')
@@ -28,7 +28,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async register(@Body() payload: RegisterPayload): Promise<any> {
     const user = await this.userService.create(payload);
-    return await this.authService.createToken(user);
+    return await this.authService.generateAuthTokens(user);
   }
 
   @ApiBearerAuth()
