@@ -26,7 +26,7 @@ export class AuthService {
 
   generateToken(userId: string, expires: number, type: string) {
     const payload = {
-      sub: userId,
+      id: userId,
       iat: moment().unix(),
       exp: expires,
       type,
