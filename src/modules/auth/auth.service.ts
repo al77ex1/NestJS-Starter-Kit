@@ -1,10 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  NotAcceptableException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Hash } from '../../utils/Hash';
 import * as moment from 'moment';
 import { ConfigService, tokenTypes } from './../config';
 import { User, UsersService } from './../user';
-import { LoginPayload } from './login.payload';
+import { LoginPayload, LogoutPayload } from './';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -75,6 +79,17 @@ export class AuthService {
       },
       user,
     };
+  }
+
+  async logout(payload: LogoutPayload) {
+    const refreshTokenDoc = await this.authRepository.findOne({
+      token: payload.refreshToken,
+      type: tokenTypes.REFRESH,
+      blacklisted: false,
+    });
+    if (!refreshTokenDoc) throw new NotAcceptableException('Token not found');
+
+    await this.authRepository.delete({ token: payload.refreshToken });
   }
 
   async validateUser(payload: LoginPayload): Promise<any> {

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { Unique } from './../common';
-import { SameAs } from './../common/validator/same-as.validator';
-import { User } from './../user';
+import { Unique } from './../../common';
+import { SameAs } from './../../common/validator/same-as.validator';
+import { User } from './../../user';
 
 export type UserRoleType = 'admin' | 'user';
 
