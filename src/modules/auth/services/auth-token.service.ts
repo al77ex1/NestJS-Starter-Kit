@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as moment from 'moment';
-import { ConfigService, tokenTypes } from './../config';
-import { User, UsersService } from './../user';
+import { ConfigService, tokenTypes } from './../../config';
+import { User, UsersService } from './../../user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Auth, AuthFillableFields } from './auth.entity';
+import { Auth, AuthFillableFields } from './../auth.entity';
 
 @Injectable()
 export class AuthTokenService {

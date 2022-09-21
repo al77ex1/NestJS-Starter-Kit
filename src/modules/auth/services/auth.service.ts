@@ -3,26 +3,22 @@ import {
   UnauthorizedException,
   NotAcceptableException,
 } from '@nestjs/common';
-import { Hash } from '../../utils/Hash';
-import { tokenTypes } from './../config';
-import { UsersService } from './../user';
-import { LoginPayload, LogoutPayload } from './';
+import { Hash } from '../../../utils/Hash';
+import { tokenTypes } from './../../config';
+import { UsersService } from './../../user';
+import { LoginPayload, LogoutPayload } from '../';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Auth } from './auth.entity';
+import { Auth } from './../auth.entity';
 
 @Injectable()
 export class AuthService {
-  private readonly tokenTypes: { [key: string]: string };
-
   constructor(
     @InjectRepository(Auth)
     private readonly authRepository: Repository<Auth>,
     private readonly userService: UsersService,
-  ) {
-    this.tokenTypes = tokenTypes;
-  }
+  ) {}
 
   async logout(payload: LogoutPayload) {
     const refreshTokenDoc = await this.authRepository.findOne({
