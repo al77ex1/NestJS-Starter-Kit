@@ -2,6 +2,7 @@ export * from './dto/register.payload';
 export * from './dto/login.payload';
 export * from './dto/logout.payload';
 export * from './auth.entity';
+export * from './auth-token.service';
 export * from './auth.service';
 export * from './jwt.strategy';
 export * from './auth.module';

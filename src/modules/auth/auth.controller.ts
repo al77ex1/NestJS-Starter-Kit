@@ -1,7 +1,13 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthService, LoginPayload, LogoutPayload, RegisterPayload } from './';
+import {
+  AuthService,
+  AuthTokenService,
+  LoginPayload,
+  LogoutPayload,
+  RegisterPayload,
+} from './';
 import { CurrentUser } from './../common/decorator/current-user.decorator';
 import { User, UsersService } from './../user';
 
@@ -10,6 +16,7 @@ import { User, UsersService } from './../user';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly authTokenService: AuthTokenService,
     private readonly userService: UsersService,
   ) {}
 
@@ -19,7 +26,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async register(@Body() payload: RegisterPayload): Promise<any> {
     const user = await this.userService.create(payload);
-    return await this.authService.generateAuthTokens(user);
+    return await this.authTokenService.generateAuthTokens(user);
   }
 
   @Post('login')
@@ -28,7 +35,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(@Body() payload: LoginPayload): Promise<any> {
     const user = await this.authService.validateUser(payload);
-    return await this.authService.generateAuthTokens(user);
+    return await this.authTokenService.generateAuthTokens(user);
   }
 
   @Post('logout')
