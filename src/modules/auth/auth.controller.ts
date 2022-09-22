@@ -1,13 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import {
-  AuthService,
-  AuthTokenService,
-  LoginPayload,
-  LogoutPayload,
-  RegisterPayload,
-} from './';
+import { AuthService, AuthTokenService } from './services/';
+import { LoginPayload, LogoutPayload, RegisterPayload } from './dto/';
 import { CurrentUser } from './../common/decorator/current-user.decorator';
 import { User, UsersService } from './../user';
 

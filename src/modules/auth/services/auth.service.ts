@@ -6,7 +6,7 @@ import {
 import { Hash } from '../../../utils/Hash';
 import { tokenTypes } from './../../config';
 import { UsersService } from './../../user';
-import { LoginPayload, LogoutPayload } from '../';
+import { LoginPayload, LogoutPayload } from '../dto/';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
