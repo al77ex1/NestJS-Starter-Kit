@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as moment from 'moment';
 import { ConfigService, tokenTypes } from './../../config';
-import { User, UsersService } from './../../user';
+import { User } from './../../user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,6 +15,7 @@ export class AuthTokenService {
   constructor(
     @InjectRepository(Auth)
     private readonly authRepository: Repository<Auth>,
+    private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {
@@ -72,5 +73,37 @@ export class AuthTokenService {
       },
       user,
     };
+  }
+
+  async refreshAuth(refreshToken: string) {
+    try {
+      const refreshTokenDoc = await this.verifyToken(
+        refreshToken,
+        tokenTypes.REFRESH,
+      );
+      const user = await this.userRepository.findOne({
+        id: refreshTokenDoc.id,
+      });
+      if (!user) throw new Error('User not found');
+
+      await this.authRepository.delete({ token: refreshTokenDoc.token });
+      return await this.generateAuthTokens(user);
+    } catch (error) {
+      throw new NotAcceptableException(`Please authenticate. ${error}`);
+    }
+  }
+
+  async verifyToken(token: string, type: string) {
+    const payload = this.jwtService.verify(token);
+    const tokenDoc = await this.authRepository.findOne({
+      token,
+      type,
+      blacklisted: false,
+      user: payload.id,
+    });
+    if (!tokenDoc) {
+      throw new Error('Token not found');
+    }
+    return tokenDoc;
   }
 }
