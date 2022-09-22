@@ -2,7 +2,7 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as moment from 'moment';
 import { ConfigService, tokenTypes } from './../../config';
-import { User } from './../../user';
+import { User, UsersService } from './../../user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,9 +15,9 @@ export class AuthTokenService {
   constructor(
     @InjectRepository(Auth)
     private readonly authRepository: Repository<Auth>,
-    private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly userService: UsersService,
   ) {
     this.tokenTypes = tokenTypes;
   }
@@ -81,9 +81,7 @@ export class AuthTokenService {
         refreshToken,
         tokenTypes.REFRESH,
       );
-      const user = await this.userRepository.findOne({
-        id: refreshTokenDoc.id,
-      });
+      const user = await this.userService.get(refreshTokenDoc.id);
       if (!user) throw new Error('User not found');
 
       await this.authRepository.delete({ token: refreshTokenDoc.token });
