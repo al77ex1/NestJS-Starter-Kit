@@ -82,7 +82,7 @@ export class AuthTokenService {
         payload.refreshToken,
         tokenTypes.REFRESH,
       );
-      const user = await this.userService.get(refreshTokenDoc.id);
+      const user = await this.userService.get(refreshTokenDoc.userId);
       if (!user) throw new Error('User not found');
 
       await this.authRepository.delete({ token: refreshTokenDoc.token });
@@ -103,6 +103,6 @@ export class AuthTokenService {
     if (!tokenDoc) {
       throw new Error('Token not found');
     }
-    return tokenDoc;
+    return {...tokenDoc, userId: payload.id};
   }
 }
