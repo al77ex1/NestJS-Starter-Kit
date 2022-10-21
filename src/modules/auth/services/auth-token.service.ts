@@ -1,6 +1,7 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as moment from 'moment';
+import { RefreshTokenPayload } from '../dto/';
 import { ConfigService, tokenTypes } from './../../config';
 import { User, UsersService } from './../../user';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -75,10 +76,10 @@ export class AuthTokenService {
     };
   }
 
-  async refreshAuth(refreshToken: string) {
+  async refreshAuth(payload: RefreshTokenPayload) {
     try {
       const refreshTokenDoc = await this.verifyToken(
-        refreshToken,
+        payload.refreshToken,
         tokenTypes.REFRESH,
       );
       const user = await this.userService.get(refreshTokenDoc.id);
