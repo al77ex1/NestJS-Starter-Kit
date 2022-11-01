@@ -94,12 +94,12 @@ export class AuthTokenService {
 
   async verifyToken(token: string, type: string) {
     const payload = this.jwtService.verify(token);
-    const tokenDoc = await this.authRepository.findOne({
+    const tokenDoc = await this.authRepository.findOne({ where: {
       token,
       type,
       blacklisted: false,
       user: payload.id,
-    });
+    }});
     if (!tokenDoc) {
       throw new Error('Token not found');
     }

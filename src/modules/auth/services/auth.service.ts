@@ -21,11 +21,11 @@ export class AuthService {
   ) {}
 
   async logout(payload: LogoutPayload) {
-    const refreshTokenDoc = await this.authRepository.findOne({
+    const refreshTokenDoc = await this.authRepository.findOne({ where: {
       token: payload.refreshToken,
       type: tokenTypes.REFRESH,
       blacklisted: false,
-    });
+    }});
     if (!refreshTokenDoc) throw new NotAcceptableException('Token not found');
 
     await this.authRepository.delete({ token: payload.refreshToken });
