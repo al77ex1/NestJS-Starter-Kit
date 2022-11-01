@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User, UserFillableFields } from './user.entity';
+import { Roles } from '../config'
 
 @Injectable()
 export class UsersService {
+  private roles = new Roles();
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -27,7 +29,8 @@ export class UsersService {
         'User with provided email already created.',
       );
     }
-
+    const allRoles = this.roles.getRoles();
+    if (!allRoles.find(role => role === payload.role)) throw new NotAcceptableException('Unknown role.',);
     return await this.userRepository.save(payload);
   }
 }
