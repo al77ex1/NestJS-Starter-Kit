@@ -4,7 +4,6 @@ import { Unique } from './../../common';
 import { SameAs } from './../../common/validator/same-as.validator';
 import { User } from './../../user';
 
-export type UserRoleType = 'admin' | 'user';
 
 export class RegisterPayload {
   @ApiProperty({
@@ -31,7 +30,7 @@ export class RegisterPayload {
     required: true,
   })
   @IsNotEmpty()
-  role: UserRoleType;
+  role: string;
 
   @ApiProperty({ required: true })
   @SameAs('password')

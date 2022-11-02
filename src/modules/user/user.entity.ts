@@ -2,8 +2,6 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { PasswordTransformer } from './password.transformer';
 import { Auth } from '../auth/auth.entity';
 
-export type UserRoleType = 'admin' | 'user';
-
 @Entity({
   name: 'users',
 })
@@ -24,12 +22,8 @@ export class User {
   })
   password: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['admin', 'user'],
-    default: 'user',
-  })
-  role: UserRoleType;
+  @Column({ length: 50 })
+  role: string;
 
   @Column({ type: 'boolean', default: false })
   isEmailVerified: boolean;
@@ -61,5 +55,5 @@ export class UserFillableFields {
   name: string;
   email: string;
   password: string;
-  role: UserRoleType;
+  role: string;
 }
